@@ -24,14 +24,16 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-wellness-light">
       <Navbar />
-      <Dashboard />
-      
-      <div className="bg-white py-10">
-        <BlogSection />
-      </div>
-      
-      <div className="py-10">
-        <BadgeSection limit={3} />
+      <div className="pt-16 sm:pt-20">  {/* Added padding top to account for navbar */}
+        <Dashboard />
+        
+        <div className="bg-white py-8 sm:py-10">
+          <BlogSection />
+        </div>
+        
+        <div className="py-8 sm:py-10">
+          <BadgeSection limit={3} />
+        </div>
       </div>
     </div>
   );

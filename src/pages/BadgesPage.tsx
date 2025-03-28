@@ -23,14 +23,14 @@ const BadgesPage = () => {
     <div className="min-h-screen bg-wellness-light">
       <Navbar />
       
-      <div className="pt-24 pb-12">
+      <div className="pt-20 pb-8 sm:pt-24 sm:pb-12">
         <div className="container mx-auto px-4">
-          <div className="glass-card p-8 mb-8">
-            <h1 className="text-3xl font-bold mb-2">Your Achievement Badges</h1>
-            <p className="text-wellness-gray mb-2">
+          <div className="glass-card p-5 sm:p-8 mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">Your Achievement Badges</h1>
+            <p className="text-wellness-gray mb-2 text-sm sm:text-base">
               Track your progress and showcase your health and wellness accomplishments
             </p>
-            <div className="text-sm text-wellness-gray">
+            <div className="text-xs sm:text-sm text-wellness-gray">
               <p>Complete challenges and maintain healthy habits to earn badges.</p>
               <p>Share your achievements on social media to inspire others!</p>
             </div>

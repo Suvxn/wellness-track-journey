@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { LoginForm } from "./LoginForm";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Health and wellness carousel images
 const carouselImages = [
@@ -40,6 +41,7 @@ const carouselImages = [
 export const LoginPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   // Function to handle login (simulated)
   const handleLogin = (email: string, password: string, rememberMe: boolean) => {
@@ -83,11 +85,11 @@ export const LoginPage = () => {
               alt={image.alt}
               className="object-cover w-full h-full"
             />
-            <div className="absolute bottom-20 left-10 z-20 text-white max-w-md md:left-20">
-              <h2 className="text-3xl md:text-4xl font-bold mb-2 animate-slide-up">
+            <div className="absolute bottom-20 left-5 md:left-10 z-20 text-white max-w-md lg:left-20">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 animate-slide-up">
                 {image.title}
               </h2>
-              <p className="text-lg md:text-xl animate-slide-up animation-delay-150">
+              <p className="text-base md:text-lg lg:text-xl animate-slide-up animation-delay-150">
                 {image.subtitle}
               </p>
             </div>
@@ -95,39 +97,44 @@ export const LoginPage = () => {
         ))}
       </div>
 
-      {/* Carousel navigation buttons */}
-      <button onClick={prevSlide} className="carousel-button left-5">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+      {/* Carousel navigation buttons - hidden on small mobile devices */}
+      <button onClick={prevSlide} className="carousel-button left-2 md:left-5 hidden sm:flex">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5 md:w-6 md:h-6">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      <button onClick={nextSlide} className="carousel-button right-5">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+      <button onClick={nextSlide} className="carousel-button right-2 md:right-5 hidden sm:flex">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5 md:w-6 md:h-6">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
       {/* Login form overlay */}
-      <div className="absolute right-10 top-1/2 transform -translate-y-1/2 z-30 max-w-md w-full px-4 md:px-0">
+      <div className={`
+        absolute z-30 w-full px-4 
+        ${isMobile 
+          ? "inset-x-0 bottom-0 pb-10 pt-5" 
+          : "right-5 md:right-10 top-1/2 transform -translate-y-1/2 max-w-md"}
+      `}>
         <LoginForm onLogin={handleLogin} />
       </div>
 
       {/* Carousel indicators */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
         {carouselImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === currentSlide ? "bg-white w-8" : "bg-white/50"
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+              index === currentSlide ? "bg-white w-6 md:w-8" : "bg-white/50"
             }`}
           />
         ))}
       </div>
 
       {/* Brand name */}
-      <div className="absolute top-8 left-8 z-20">
-        <h1 className="text-white text-3xl font-bold">WellnessTrack</h1>
+      <div className="absolute top-4 md:top-8 left-4 md:left-8 z-20">
+        <h1 className="text-white text-2xl md:text-3xl font-bold">WellnessTrack</h1>
       </div>
     </div>
   );

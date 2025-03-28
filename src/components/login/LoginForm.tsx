@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LoginFormProps {
   onLogin: (email: string, password: string, rememberMe: boolean) => void;
@@ -16,6 +17,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,14 +51,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="glass-card p-8 w-full max-w-md mx-auto animate-fade-in">
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl font-bold text-wellness-dark">Welcome Back</h2>
-        <p className="text-wellness-gray">Sign in to your account</p>
+    <div className={`glass-card p-6 sm:p-8 w-full mx-auto animate-fade-in ${isMobile ? 'rounded-t-2xl rounded-b-none' : 'max-w-md rounded-2xl'}`}>
+      <div className="mb-4 sm:mb-6 text-center">
+        <h2 className="text-xl sm:text-2xl font-bold text-wellness-dark">Welcome Back</h2>
+        <p className="text-sm sm:text-base text-wellness-gray">Sign in to your account</p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
+      <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+        <div className="space-y-1 sm:space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
             id="email"
@@ -68,10 +70,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           />
         </div>
         
-        <div className="space-y-2">
+        <div className="space-y-1 sm:space-y-2">
           <div className="flex justify-between items-center">
             <Label htmlFor="password">Password</Label>
-            <a href="#" className="text-sm text-wellness-primary hover:underline">
+            <a href="#" className="text-xs sm:text-sm text-wellness-primary hover:underline">
               Forgot Password?
             </a>
           </div>
@@ -91,7 +93,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             checked={rememberMe} 
             onCheckedChange={(checked) => setRememberMe(checked === true)}
           />
-          <Label htmlFor="remember" className="text-sm cursor-pointer">Remember me</Label>
+          <Label htmlFor="remember" className="text-xs sm:text-sm cursor-pointer">Remember me</Label>
         </div>
         
         <Button 
@@ -103,8 +105,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         </Button>
       </form>
       
-      <div className="mt-6 text-center">
-        <p className="text-wellness-gray">
+      <div className="mt-4 sm:mt-6 text-center">
+        <p className="text-xs sm:text-sm text-wellness-gray">
           Don't have an account?{" "}
           <a href="#" className="text-wellness-primary hover:underline">
             Sign Up
