@@ -106,11 +106,11 @@
   }
   
   .badge-inner {
-    @apply relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md hover:bg-opacity-0;
+    @apply relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0;
   }
   
   .health-metric-card {
-    @apply p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-white to-wellness-lightGray dark:from-wellness-dark/90 dark:to-wellness-dark border border-wellness-lightGray dark:border-wellness-dark/50 shadow-md hover:shadow-lg transition-all duration-300;
+    @apply p-6 rounded-2xl bg-gradient-to-br from-white to-wellness-lightGray dark:from-wellness-dark/90 dark:to-wellness-dark border border-wellness-lightGray dark:border-wellness-dark/50 shadow-md hover:shadow-lg transition-all duration-300;
   }
   
   .carousel-button {
