@@ -40,7 +40,8 @@ export const Navbar = () => {
   const navLinks = [
     { name: "Dashboard", path: "/dashboard" },
     { name: "Blog", path: "/blog" },
-    { name: "My Badges", path: "/badges" }
+    { name: "My Badges", path: "/badges" },
+    { name: "Menstrual Tracker", path: "/menstrual-tracker" }
   ];
 
   if (!isLoggedIn && location.pathname !== "/") {
@@ -128,6 +129,9 @@ export const Navbar = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/badges">My Badges</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/menstrual-tracker">Menstrual Tracker</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/profile">Profile</Link>

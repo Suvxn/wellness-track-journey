@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import DashboardPage from "./pages/DashboardPage";
 import BlogPage from "./pages/BlogPage";
 import BadgesPage from "./pages/BadgesPage";
+import MenstrualTrackerPage from "./pages/MenstrualTrackerPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/badges" element={<BadgesPage />} />
+          <Route path="/menstrual-tracker" element={<MenstrualTrackerPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
