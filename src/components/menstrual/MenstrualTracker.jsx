@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { format, addDays, differenceInDays } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
@@ -10,26 +11,10 @@ import MenstrualStats from "./MenstrualStats";
 import MenstrualAchievements from "./MenstrualAchievements";
 import { Calendar as CalendarIcon, Droplet, Star } from "lucide-react";
 
-type CycleDay = {
-  date: Date;
-  flow?: "light" | "medium" | "heavy" | null;
-  symptoms?: string[];
-  notes?: string;
-};
-
-type CycleData = {
-  startDate: Date | null;
-  endDate: Date | null;
-  days: CycleDay[];
-  predictedNextDate: Date | null;
-  averageCycleLength: number;
-  cycleHistory: { start: Date; end: Date }[];
-};
-
 const MenstrualTracker = () => {
   const { toast } = useToast();
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-  const [cycleData, setCycleData] = useState<CycleData>(() => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [cycleData, setCycleData] = useState(() => {
     const savedData = localStorage.getItem("menstrualCycleData");
     if (savedData) {
       const parsed = JSON.parse(savedData);
@@ -38,11 +23,11 @@ const MenstrualTracker = () => {
         startDate: parsed.startDate ? new Date(parsed.startDate) : null,
         endDate: parsed.endDate ? new Date(parsed.endDate) : null,
         predictedNextDate: parsed.predictedNextDate ? new Date(parsed.predictedNextDate) : null,
-        days: parsed.days.map((day: any) => ({
+        days: parsed.days.map((day) => ({
           ...day,
           date: new Date(day.date),
         })),
-        cycleHistory: parsed.cycleHistory.map((cycle: any) => ({
+        cycleHistory: parsed.cycleHistory.map((cycle) => ({
           start: new Date(cycle.start),
           end: new Date(cycle.end),
         })),
@@ -58,11 +43,12 @@ const MenstrualTracker = () => {
     };
   });
   
-  const [points, setPoints] = useState<number>(() => {
+  const [points, setPoints] = useState(() => {
     return Number(localStorage.getItem("menstrualTrackerPoints") || "0");
   });
 
   useEffect(() => {
+    // Save cycle data to localStorage whenever it changes
     localStorage.setItem("menstrualCycleData", JSON.stringify(cycleData));
   }, [cycleData]);
 
@@ -72,16 +58,18 @@ const MenstrualTracker = () => {
 
   const startNewCycle = () => {
     if (selectedDate) {
+      // If there was a previous cycle, add it to history
       if (cycleData.startDate && cycleData.endDate) {
         setCycleData(prev => ({
           ...prev,
           cycleHistory: [
             ...prev.cycleHistory,
-            { start: prev.startDate!, end: prev.endDate! }
+            { start: prev.startDate, end: prev.endDate }
           ],
         }));
       }
 
+      // Start a new cycle
       setCycleData(prev => ({
         ...prev,
         startDate: selectedDate,
@@ -105,9 +93,10 @@ const MenstrualTracker = () => {
   const endCurrentCycle = () => {
     if (selectedDate && cycleData.startDate) {
       setCycleData(prev => {
+        // Calculate average cycle length based on history
         const newHistory = [
           ...prev.cycleHistory,
-          { start: prev.startDate!, end: selectedDate }
+          { start: prev.startDate, end: selectedDate }
         ];
         
         let totalDays = 0;
@@ -129,7 +118,7 @@ const MenstrualTracker = () => {
           endDate: selectedDate,
           cycleHistory: newHistory,
           averageCycleLength: newAvgLength,
-          predictedNextDate: addDays(prev.startDate!, newAvgLength),
+          predictedNextDate: addDays(prev.startDate, newAvgLength),
         };
       });
 
@@ -142,7 +131,7 @@ const MenstrualTracker = () => {
     }
   };
 
-  const logSymptom = (symptom: string) => {
+  const logSymptom = (symptom) => {
     if (selectedDate) {
       setCycleData(prev => {
         const existingDayIndex = prev.days.findIndex(
@@ -150,6 +139,7 @@ const MenstrualTracker = () => {
         );
         
         if (existingDayIndex >= 0) {
+          // Update existing day
           const updatedDays = [...prev.days];
           const existingDay = updatedDays[existingDayIndex];
           
@@ -162,6 +152,7 @@ const MenstrualTracker = () => {
           
           return { ...prev, days: updatedDays };
         } else {
+          // Add new day
           return {
             ...prev,
             days: [
@@ -181,7 +172,7 @@ const MenstrualTracker = () => {
     }
   };
 
-  const addPoints = (amount: number) => {
+  const addPoints = (amount) => {
     setPoints(prev => prev + amount);
     toast({
       title: "Points Earned!",
@@ -189,7 +180,7 @@ const MenstrualTracker = () => {
     });
   };
 
-  const getDateClasses = (date: Date) => {
+  const getDateClasses = (date) => {
     const dateStr = format(date, 'yyyy-MM-dd');
     const cycleDay = cycleData.days.find(
       day => format(day.date, 'yyyy-MM-dd') === dateStr
@@ -210,7 +201,7 @@ const MenstrualTracker = () => {
     return "";
   };
 
-  const setFlowIntensity = (intensity: "light" | "medium" | "heavy") => {
+  const setFlowIntensity = (intensity) => {
     if (selectedDate) {
       setCycleData(prev => {
         const existingDayIndex = prev.days.findIndex(
@@ -218,6 +209,7 @@ const MenstrualTracker = () => {
         );
         
         if (existingDayIndex >= 0) {
+          // Update existing day
           const updatedDays = [...prev.days];
           updatedDays[existingDayIndex] = {
             ...updatedDays[existingDayIndex],
@@ -226,6 +218,7 @@ const MenstrualTracker = () => {
           
           return { ...prev, days: updatedDays };
         } else {
+          // Add new day
           return {
             ...prev,
             days: [
@@ -265,10 +258,11 @@ const MenstrualTracker = () => {
                 booked: cycleData.days.map(day => day.date),
               }}
               modifiersClassNames={{
-                booked: "day-booked",
+                booked: "day-booked", // Use a string class name instead of a function
               }}
               modifiersStyles={{
                 booked: (date) => {
+                  // Apply inline styles using the function
                   const dateStr = format(date, 'yyyy-MM-dd');
                   const cycleDay = cycleData.days.find(
                     day => format(day.date, 'yyyy-MM-dd') === dateStr
