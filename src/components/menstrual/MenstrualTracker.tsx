@@ -274,7 +274,30 @@ const MenstrualTracker = () => {
                 booked: cycleData.days.map(day => day.date),
               }}
               modifiersClassNames={{
-                booked: (date) => getDateClasses(date),
+                booked: "day-booked", // Use a string class name instead of a function
+              }}
+              modifierStyles={{
+                booked: (date) => {
+                  // Apply inline styles using the function
+                  const dateStr = format(date, 'yyyy-MM-dd');
+                  const cycleDay = cycleData.days.find(
+                    day => format(day.date, 'yyyy-MM-dd') === dateStr
+                  );
+                  
+                  if (!cycleDay) return {};
+                  
+                  if (cycleDay.flow === "light") {
+                    return { backgroundColor: "#fee2e2", color: "#991b1b", borderRadius: "0.375rem" };
+                  } else if (cycleDay.flow === "medium") {
+                    return { backgroundColor: "#fca5a5", color: "#991b1b", borderRadius: "0.375rem" };
+                  } else if (cycleDay.flow === "heavy") {
+                    return { backgroundColor: "#ef4444", color: "#ffffff", borderRadius: "0.375rem" };
+                  } else if (cycleDay.symptoms && cycleDay.symptoms.length > 0) {
+                    return { backgroundColor: "#e0e7ff", color: "#4338ca", borderRadius: "0.375rem" };
+                  }
+                  
+                  return {};
+                }
               }}
               footer={
                 <div className="mt-4 flex flex-col gap-2">
