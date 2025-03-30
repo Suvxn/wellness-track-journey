@@ -9,6 +9,10 @@ import DashboardPage from "./pages/DashboardPage";
 import BlogPage from "./pages/BlogPage";
 import BadgesPage from "./pages/BadgesPage";
 import MenstrualTrackerPage from "./pages/MenstrualTrackerPage";
+import GamesPage from "./pages/GamesPage";
+import FoodSortingPage from "./pages/games/FoodSortingPage";
+import HydrationHeroPage from "./pages/games/HydrationHeroPage";
+import MindfulnessMazePage from "./pages/games/MindfulnessMazePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +29,10 @@ const App = () => (
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/badges" element={<BadgesPage />} />
           <Route path="/menstrual-tracker" element={<MenstrualTrackerPage />} />
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/games/food-sorting" element={<FoodSortingPage />} />
+          <Route path="/games/hydration-hero" element={<HydrationHeroPage />} />
+          <Route path="/games/mindfulness-maze" element={<MindfulnessMazePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
