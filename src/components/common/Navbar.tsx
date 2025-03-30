@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
+import { Menu, Gamepad } from "lucide-react";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -41,7 +41,8 @@ export const Navbar = () => {
     { name: "Dashboard", path: "/dashboard" },
     { name: "Blog", path: "/blog" },
     { name: "My Badges", path: "/badges" },
-    { name: "Menstrual Tracker", path: "/menstrual-tracker" }
+    { name: "Menstrual Tracker", path: "/menstrual-tracker" },
+    { name: "Games", path: "/games" }
   ];
 
   if (!isLoggedIn && location.pathname !== "/") {
@@ -133,6 +134,10 @@ export const Navbar = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/menstrual-tracker">Menstrual Tracker</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/games">Games</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link to="/profile">Profile</Link>
                 </DropdownMenuItem>
